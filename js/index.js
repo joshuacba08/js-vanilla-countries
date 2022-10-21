@@ -3,6 +3,15 @@ window.addEventListener("load", () => {
   const countriesContainer = document.getElementById("countries-container");
   const urlBase = "https://restcountries.com/v3.1";
   let arrayData = [];
+  const optionsRegion= document.querySelector('.filter__dropdown');
+  const filterText = document.querySelector('.filter__select .select__text');
+  optionsRegion.addEventListener('click',(e)=>{
+    const option = e.target.innerHTML;
+    filterText.innerText = option;
+    getCountriesByCondition('region',option);
+  })
+
+
   //funciones
 
   const printCountries = (arrCountries) => {
@@ -22,7 +31,7 @@ window.addEventListener("load", () => {
             <strong>Region:</strong> ${country.region}
           </p>
           <p class="info__item">
-            <strong>Capital:</strong> ${country.capital[0]}
+            <strong>Capital:</strong> ${country.capital ? country.capital[0] : 'no capital'}
           </p>
         </div>
         `;
@@ -39,6 +48,7 @@ window.addEventListener("load", () => {
 
   const getCountriesByCondition = (key, value) => {
     const result = arrayData.filter( country => country[key] == value );
+    console.log(result);
     removeCountries();
     printCountries(result);
   }
